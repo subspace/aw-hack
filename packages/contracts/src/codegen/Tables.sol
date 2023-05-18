@@ -5,7 +5,7 @@ pragma solidity >=0.8.0;
 
 import {PlayerComponent, PlayerComponentTableId} from "./tables/PlayerComponent.sol";
 import {MovableComponent, MovableComponentTableId} from "./tables/MovableComponent.sol";
-import {PositionComponent, PositionComponentData, PositionComponentTableId} from "./tables/PositionComponent.sol";
+import {PositionComponent, PositionComponentTableId} from "./tables/PositionComponent.sol";
 import {NameComponent, NameComponentTableId} from "./tables/NameComponent.sol";
 import {HealthComponent, HealthComponentTableId} from "./tables/HealthComponent.sol";
 import {PowerComponent, PowerComponentTableId} from "./tables/PowerComponent.sol";

@@ -5,7 +5,8 @@ export default mudConfig({
     PlayerComponent: "bool",
     MovableComponent: "bool",
     PositionComponent: {
-      schema: { x: "int32", y: "int32" },
+      dataStruct: false,
+      schema: { x: "uint32", y: "uint32" },
     },
     NameComponent: "string",
     HealthComponent: "uint256",
