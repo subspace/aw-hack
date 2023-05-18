@@ -5,12 +5,88 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
-    Counter: (() => {
-      const tableId = new TableId("", "Counter");
+    PlayerComponent: (() => {
+      const tableId = new TableId("", "PlayerComponent");
       return defineComponent(
         world,
         {
-          value: RecsType.Number,
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    MovableComponent: (() => {
+      const tableId = new TableId("", "MovableComponent");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    PositionComponent: (() => {
+      const tableId = new TableId("", "PositionComponen");
+      return defineComponent(
+        world,
+        {
+          x: RecsType.Number,
+          y: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    NameComponent: (() => {
+      const tableId = new TableId("", "NameComponent");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    HealthComponent: (() => {
+      const tableId = new TableId("", "HealthComponent");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    PowerComponent: (() => {
+      const tableId = new TableId("", "PowerComponent");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.BigInt,
         },
         {
           metadata: {
