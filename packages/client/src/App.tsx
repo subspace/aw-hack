@@ -1,29 +1,29 @@
-import { useComponentValue } from "@latticexyz/react";
-import { useMUD } from "./MUDContext";
+import { SyncState } from '@latticexyz/network';
+import { useComponentValue } from '@latticexyz/react';
+import { useMUD } from './MUDContext';
+import { Grid } from './Grid';
 
 export const App = () => {
   const {
-    components: { Counter },
-    systemCalls: { increment },
+    components: { LoadingState },
     network: { singletonEntity },
   } = useMUD();
 
-  const counter = useComponentValue(Counter, singletonEntity);
+  const loadingState = useComponentValue(LoadingState, singletonEntity, {
+    state: SyncState.CONNECTING,
+    msg: 'Connecting',
+    percentage: 0,
+  });
 
   return (
-    <>
-      <div>
-        Counter: <span>{counter?.value ?? "??"}</span>
-      </div>
-      <button
-        type="button"
-        onClick={async (event) => {
-          event.preventDefault();
-          console.log("new counter value:", await increment());
-        }}
-      >
-        Increment
-      </button>
-    </>
+    <div>
+      {loadingState.state !== SyncState.LIVE ? (
+        <div>
+          {loadingState.msg} ({Math.floor(loadingState.percentage)}%)
+        </div>
+      ) : (
+        <Grid />
+      )}
+    </div>
   );
 };
