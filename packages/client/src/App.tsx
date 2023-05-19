@@ -5,11 +5,11 @@ import { Grid } from './Grid';
 
 export const App = () => {
   const {
-    components: { LoadingState },
+    components,
     network: { singletonEntity },
   } = useMUD();
 
-  const loadingState = useComponentValue(LoadingState, singletonEntity, {
+  const loadingState = useComponentValue(components.LoadingState, singletonEntity, {
     state: SyncState.CONNECTING,
     msg: 'Connecting',
     percentage: 0,
