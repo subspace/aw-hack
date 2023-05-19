@@ -79,6 +79,9 @@ importers:
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2
+      use-sound:
+        specifier: ^4.0.1
+        version: 4.0.1(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.6
@@ -3059,6 +3062,10 @@ packages:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
+  /howler@2.2.3:
+    resolution: {integrity: sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==}
+    dev: false
+
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
@@ -4797,6 +4804,15 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /use-sound@4.0.1(react@18.2.0):
+    resolution: {integrity: sha512-hykJ86kNcu6y/FzlSHcQxhjSGMslZx2WlfLpZNoPbvueakv4OF3xPxEtGV2YmculrIaH0tPp9LtG4jgy17xMWg==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      howler: 2.2.3
+      react: 18.2.0
     dev: false
 
   /use-sync-external-store@1.2.0(react@18.2.0):
