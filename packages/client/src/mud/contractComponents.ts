@@ -113,5 +113,20 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    ObstructionComponent: (() => {
+      const tableId = new TableId("", "ObstructionCompo");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

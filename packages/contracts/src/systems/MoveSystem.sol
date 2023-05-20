@@ -2,7 +2,13 @@
 pragma solidity >=0.8.0;
 
 import {System} from "@latticexyz/world/src/System.sol";
-import {PlayerComponent as Player, MovableComponent as Movable, PositionComponent as Position, Map} from "../codegen/Tables.sol";
+import {
+    PlayerComponent as Player, 
+    MovableComponent as Movable, 
+    PositionComponent as Position, 
+    ObstructionComponent as Obstruction,
+    Map
+} from "../codegen/Tables.sol";
 import {playerEntity} from "../entities.sol";
 import {addressToEntityKey} from "../utils.sol";
 import { positionToEntityKey } from "../positionToEntityKey.sol";
@@ -15,9 +21,8 @@ contract MoveSystem is System {
         (uint32 fromX, uint32 fromY) = Position.get(player);
         require(distance(fromX, fromY, x, y) == 1, "can only move to adjacent spaces");
 
-        // TODO: check for obstructions
-        // bytes32 position = positionToEntityKey(x, y);
-        // require(!Obstruction.get(position), "this space is obstructed");
+        bytes32 position = positionToEntityKey(x, y);
+        require(!Obstruction.get(position), "this space is obstructed");
 
         // Constrain position to map size, wrapping around if necessary
         (uint32 width, uint32 height, ) = Map.get();

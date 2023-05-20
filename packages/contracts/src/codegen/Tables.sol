@@ -10,3 +10,4 @@ import { PositionComponent, PositionComponentTableId } from "./tables/PositionCo
 import { NameComponent, NameComponentTableId } from "./tables/NameComponent.sol";
 import { HealthComponent, HealthComponentTableId } from "./tables/HealthComponent.sol";
 import { PowerComponent, PowerComponentTableId } from "./tables/PowerComponent.sol";
+import { ObstructionComponent, ObstructionComponentTableId } from "./tables/ObstructionComponent.sol";
