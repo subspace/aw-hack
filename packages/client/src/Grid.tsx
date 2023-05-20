@@ -1,14 +1,21 @@
-import { useMUD } from './MUDContext';
 import { useComponentValue } from '@latticexyz/react';
-import { terrainTypes, TerrainType } from './terrainTypes';
 import { hexToArray } from '@latticexyz/utils';
+import { useMUD } from './MUDContext';
+import { terrainTypes, TerrainType } from './terrainTypes';
+import { PlayerIcon } from './PlayerIcon';
 
 export const Grid = () => {
-  const {
-    components: { Map },
-    network: { singletonEntity },
-  } = useMUD();
+  const mud = useMUD();
 
+  const {
+    components: { Map, PositionComponent },
+    network: { singletonEntity, playerEntity },
+    systemCalls: { spawn },
+  } = mud;
+
+  // console.log({ components: mud.components });
+  const playerPosition = useComponentValue(PositionComponent, playerEntity);
+  console.log({ playerPosition });
   const map = useComponentValue(Map, singletonEntity);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { width, height, terrain } = map!;
@@ -31,6 +38,7 @@ export const Grid = () => {
           const terrain = terrainValues.find(
             (t) => t.x === x && t.y === y
           )?.type;
+          const hasPlayer = playerPosition?.x === x && playerPosition?.y === y;
           return (
             <div
               key={`${x},${y}`}
@@ -40,7 +48,7 @@ export const Grid = () => {
                 gridRow: y + 1,
               }}
               onClick={() => {
-                console.log('click', { x, y });
+                spawn(x, y);
               }}
             >
               <div className="flex flex-wrap gap-1 items-center justify-center relative">
@@ -49,6 +57,7 @@ export const Grid = () => {
                     {terrain.emoji}
                   </div>
                 ) : null}
+                <div className="relative">{hasPlayer ? <PlayerIcon /> : null}</div>
               </div>
             </div>
           );
