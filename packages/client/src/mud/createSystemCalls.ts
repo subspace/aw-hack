@@ -20,7 +20,6 @@ export function createSystemCalls(
     ];
   };
 
-  // TODO: handle obstructions
   const isObstructed = (x: number, y: number) => {
     return runQuery([Has(ObstructionComponent), HasValue(PositionComponent, { x, y })]).size > 0;
   };
