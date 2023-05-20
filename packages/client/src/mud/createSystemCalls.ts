@@ -30,7 +30,6 @@ export function createSystemCalls(
     }
 
     const [x, y] = wrapPosition(inputX, inputY);
-    console.log('isObstructed(x, y)', isObstructed(x, y))
     if (isObstructed(x, y)) {
       console.warn("cannot move to obstructed space");
       return;
