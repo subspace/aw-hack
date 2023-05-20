@@ -1,4 +1,4 @@
-import { getComponentValue } from "@latticexyz/recs";
+import { Has, HasValue, getComponentValue, runQuery } from "@latticexyz/recs";
 import { uuid, awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
@@ -7,7 +7,7 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { playerEntity, singletonEntity, worldSend, txReduced$ }: SetupNetworkResult,
-  { Map, PositionComponent, PlayerComponent }: ClientComponents
+  { Map, PositionComponent, PlayerComponent, ObstructionComponent }: ClientComponents
 ) {
   const wrapPosition = (x: number, y: number) => {
     const mapConfig = getComponentValue(Map, singletonEntity);
@@ -21,9 +21,9 @@ export function createSystemCalls(
   };
 
   // TODO: handle obstructions
-  // const isObstructed = (x: number, y: number) => {
-  //   return runQuery([Has(Obstruction), HasValue(PositionComponent, { x, y })]).size > 0;
-  // };
+  const isObstructed = (x: number, y: number) => {
+    return runQuery([Has(ObstructionComponent), HasValue(PositionComponent, { x, y })]).size > 0;
+  };
 
   const moveTo = async (inputX: number, inputY: number) => {
     if (!playerEntity) {
@@ -31,10 +31,11 @@ export function createSystemCalls(
     }
 
     const [x, y] = wrapPosition(inputX, inputY);
-    // if (isObstructed(x, y)) {
-    //   console.warn("cannot move to obstructed space");
-    //   return;
-    // }
+    console.log('isObstructed(x, y)', isObstructed(x, y))
+    if (isObstructed(x, y)) {
+      console.warn("cannot move to obstructed space");
+      return;
+    }
 
     const positionId = uuid();
     PositionComponent.addOverride(positionId, {
@@ -75,10 +76,10 @@ export function createSystemCalls(
     }
 
     const [x, y] = wrapPosition(inputX, inputY);
-    // if (isObstructed(x, y)) {
-    //   console.warn("cannot spawn on obstructed space");
-    //   return;
-    // }
+    if (isObstructed(x, y)) {
+      console.warn("cannot spawn on obstructed space");
+      return;
+    }
 
     const positionId = uuid();
     PositionComponent.addOverride(positionId, {

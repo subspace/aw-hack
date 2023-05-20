@@ -26,6 +26,7 @@ export default mudConfig({
     NameComponent: "string",
     HealthComponent: "uint256",
     PowerComponent: "uint256",
+    ObstructionComponent: "bool",
   },
 
   modules: [

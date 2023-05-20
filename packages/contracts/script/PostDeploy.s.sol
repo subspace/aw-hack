@@ -5,7 +5,8 @@ import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {IWorld} from "../src/codegen/world/IWorld.sol";
 import {TerrainType} from "../src/codegen/Types.sol";
-import {Map, PositionComponent as Position} from "../src/codegen/Tables.sol";
+import {Map, PositionComponent as Position, ObstructionComponent as Obstruction} from "../src/codegen/Tables.sol";
+import { positionToEntityKey } from "../src/positionToEntityKey.sol";
 
 contract PostDeploy is Script {
     function run(address worldAddress) external {
@@ -67,6 +68,12 @@ contract PostDeploy is Script {
             for (uint32 x = 0; x < width; x++) {
                 TerrainType terrainType = map[y][x];
                 terrain[(y * width) + x] = bytes1(uint8(terrainType));
+
+                bytes32 entity = positionToEntityKey(x, y);
+                if (terrainType == TerrainType.Mountain || terrainType == TerrainType.Water) {
+                    Position.set(world, entity, x, y);
+                    Obstruction.set(world, entity, true);
+                }
             }
         }
 
