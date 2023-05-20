@@ -1,5 +1,6 @@
-import { useComponentValue } from '@latticexyz/react';
+import { useComponentValue, useEntityQuery } from '@latticexyz/react';
 import { hexToArray } from '@latticexyz/utils';
+import { Has, getComponentValueStrict } from '@latticexyz/recs';
 import { useMUD } from './MUDContext';
 import { terrainTypes, TerrainType } from './terrainTypes';
 import { PlayerIcon } from './PlayerIcon';
@@ -16,7 +17,20 @@ export const Grid = () => {
 
   useKeyboardMovement();
 
-  const playerPosition = useComponentValue(PositionComponent, playerEntity);
+  const players = useEntityQuery([
+    Has(PlayerComponent),
+    Has(PositionComponent),
+  ]).map((entity) => {
+    const position = getComponentValueStrict(PositionComponent, entity);
+    return {
+      entity,
+      x: position.x,
+      y: position.y,
+      playerIcon:
+        entity === playerEntity ? <PlayerIcon isMyPlayer /> : <PlayerIcon />,
+    };
+  });
+
   const canJoinGame =
     useComponentValue(PlayerComponent, playerEntity)?.value !== true;
   const map = useComponentValue(Map, singletonEntity);
@@ -41,7 +55,7 @@ export const Grid = () => {
           const terrain = terrainValues.find(
             (t) => t.x === x && t.y === y
           )?.type;
-          const hasPlayer = playerPosition?.x === x && playerPosition?.y === y;
+          const playersHere = players?.filter((p) => p.x === x && p.y === y);
           return (
             <div
               key={`${x},${y}`}
@@ -67,7 +81,9 @@ export const Grid = () => {
                   </div>
                 ) : null}
                 <div className="relative">
-                  {hasPlayer ? <PlayerIcon /> : null}
+                  {playersHere?.map((p) => (
+                    <span key={p.entity}>{p.playerIcon}</span>
+                  ))}
                 </div>
               </div>
             </div>
