@@ -3,19 +3,22 @@ import { hexToArray } from '@latticexyz/utils';
 import { useMUD } from './MUDContext';
 import { terrainTypes, TerrainType } from './terrainTypes';
 import { PlayerIcon } from './PlayerIcon';
+import { useKeyboardMovement } from './useKeyboardMovement';
 
 export const Grid = () => {
   const mud = useMUD();
 
   const {
-    components: { Map, PositionComponent },
+    components: { Map, PositionComponent, PlayerComponent },
     network: { singletonEntity, playerEntity },
     systemCalls: { spawn },
   } = mud;
 
-  // console.log({ components: mud.components });
+  useKeyboardMovement();
+
   const playerPosition = useComponentValue(PositionComponent, playerEntity);
-  console.log({ playerPosition });
+  const canJoinGame =
+    useComponentValue(PlayerComponent, playerEntity)?.value !== true;
   const map = useComponentValue(Map, singletonEntity);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { width, height, terrain } = map!;
@@ -42,13 +45,19 @@ export const Grid = () => {
           return (
             <div
               key={`${x},${y}`}
-              className="w-8 h-8 flex items-center justify-center"
+              className={`
+                w-8 h-8 flex items-center justify-center
+                ${canJoinGame ? 'cursor-pointer hover:ring' : null}
+              `}
               style={{
                 gridColumn: x + 1,
                 gridRow: y + 1,
               }}
-              onClick={() => {
-                spawn(x, y);
+              onClick={(event) => {
+                event.preventDefault();
+                if (canJoinGame) {
+                  spawn(x, y);
+                }
               }}
             >
               <div className="flex flex-wrap gap-1 items-center justify-center relative">
@@ -57,7 +66,9 @@ export const Grid = () => {
                     {terrain.emoji}
                   </div>
                 ) : null}
-                <div className="relative">{hasPlayer ? <PlayerIcon /> : null}</div>
+                <div className="relative">
+                  {hasPlayer ? <PlayerIcon /> : null}
+                </div>
               </div>
             </div>
           );
