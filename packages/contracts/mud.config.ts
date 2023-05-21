@@ -3,10 +3,20 @@ import { mudConfig } from "@latticexyz/world/register";
 export default mudConfig({
   enums: {
     TerrainType: ["Grass", "Water", "Forest", "Mountain", "Sand", "Village"],
+    VillageBuildings: ["House", "Path", "Church", "Well", "PathDetail", "Grass", "Tree"],
   },
   tables: {
     // Singletons:
     Map: {
+      keySchema: {},
+      dataStruct: false,
+      schema: {
+        width: "uint32",
+        height: "uint32",
+        terrain: "bytes",
+      },
+    },
+    Village: {
       keySchema: {},
       dataStruct: false,
       schema: {

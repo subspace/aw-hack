@@ -4,8 +4,8 @@ pragma solidity >=0.8.0;
 import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {IWorld} from "../src/codegen/world/IWorld.sol";
-import {TerrainType} from "../src/codegen/Types.sol";
-import {Map, PositionComponent as Position, ObstructionComponent as Obstruction} from "../src/codegen/Tables.sol";
+import {TerrainType, VillageBuildings} from "../src/codegen/Types.sol";
+import {Map, Village, PositionComponent as Position, ObstructionComponent as Obstruction} from "../src/codegen/Tables.sol";
 import { positionToEntityKey } from "../src/positionToEntityKey.sol";
 
 contract PostDeploy is Script {
@@ -19,12 +19,19 @@ contract PostDeploy is Script {
         // Start broadcasting transactions from the deployer account
         vm.startBroadcast(deployerPrivateKey);
 
+       setMapTerrain(world);
+       setVillageTarrain(world);
+
+       vm.stopBroadcast();
+    }
+
+    function setMapTerrain (IWorld world) internal {
         TerrainType G = TerrainType.Grass;
         TerrainType W = TerrainType.Water;
         TerrainType F = TerrainType.Forest;
         TerrainType M = TerrainType.Mountain;
         TerrainType S = TerrainType.Sand;
-        // Can't add another variable, give too many varibles error
+        TerrainType V = TerrainType.Village;
 
         TerrainType[32][32] memory map = [
             [G, G, G, G, G, G, G, F, F, F, F, F, F, F, W, W, W, W, F, M, F, M, F, F, F, F, F, M, M, G, G, G],
@@ -38,14 +45,14 @@ contract PostDeploy is Script {
             [S, F, W, G, G, G, G, G, F, F, F, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, S, W, W, W],
             [S, G, G, W, W, G, G, F, F, F, F, F, G, G, G, G, G, F, F, F, F, F, F, F, F, F, G, G, G, S, W, W],
             [G, G, G, W, W, G, G, F, F, F, F, F, F, F, F, G, G, F, F, M, F, F, M, F, F, F, F, F, F, S, W, W],
-            [G, G, G, G, W, G, TerrainType.Village, G, G, G, F, G, M, M, M, F, F, F, F, F, F, F, M, F, F, M, F, F, M, S, W, W],
+            [G, G, G, G, W, G, V, G, G, G, F, G, M, M, M, F, F, F, F, F, F, F, M, F, F, M, F, F, M, S, W, W],
             [G, G, F, G, G, G, G, G, G, G, G, G, G, M, M, F, F, F, F, F, F, M, M, F, F, F, F, F, M, S, W, W],
             [F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, M, F, F, F, F, F, F, F, F, F, F, F, F, F, S, S],
             [M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F, F, M, F, F, F, F, F, M, F, F, F, F, F, F, F, F],
             [M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F, F, F, M, F, F, F, F, F, F, M, F, F, F, F, G, G],
             [G, W, W, W, G, G, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F],
             [G, W, W, W, W, G, G, F, F, F, F, F, M, F, F, F, F, F, F, F, F, F, F, F, M, F, F, F, F, M, M, M],
-            [G, W, W, W, G, G, TerrainType.Village, G, G, M, M, M, M, F, F, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M, M],
+            [G, W, W, W, G, G, V, G, G, M, M, M, M, F, F, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M, M],
             [G, W, W, G, G, G, G, G, G, M, M, M, M, M, M, M, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M],
             [G, G, G, G, G, G, G, G, G, G, M, M, M, M, M, M, M, M, F, F, F, F, F, F, F, F, M, F, F, F, F, F],
             [G, S, S, G, G, G, G, G, G, G, M, M, M, M, M, M, M, M, M, M, F, F, F, F, M, F, F, M, F, F, F, F],
@@ -79,7 +86,69 @@ contract PostDeploy is Script {
         }
 
         Map.set(world, width, height, terrain);
+    }
 
-        vm.stopBroadcast();
+    function setVillageTarrain (IWorld world) internal {
+
+        VillageBuildings G = VillageBuildings.Grass;
+        VillageBuildings H = VillageBuildings.House;
+        VillageBuildings C = VillageBuildings.Church;
+        VillageBuildings T = VillageBuildings.Tree;
+        VillageBuildings P = VillageBuildings.Path;
+        VillageBuildings D = VillageBuildings.PathDetail;
+        
+        VillageBuildings[32][32] memory villageMap = [
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, T, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, H, G, G, G, G, G, G, H, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, T, T, G, G, G, G, G, G, G, G, G, D, P, P, P, D, P, P, P, P, G, G, G, G, G, G, G, G],
+            [G, G, G, G, T, T, C, P, P, P, G, G, G, G, G, P, P, D, P, P, P, D, P, P, G, G, G, G, G, G, G, G],
+            [G, G, G, G, T, C, P, P, P, G, G, G, P, P, P, G, P, P, P, G, G, P, D, P, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, P, P, P, P, P, P, P, P, P, G, P, P, P, H, T, P, P, P, G, G, H, T, G, G, G, G],
+            [G, G, G, G, G, G, P, P, P, P, P, P, P, P, P, G, G, G, G, G, G, P, P, P, P, P, P, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, P, P, P, P, P, P, P, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, VillageBuildings.Well, G, G, G, P, P, P, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, C, D, P, P, P, P, P, P, P, G, G, G, G, G, P, P, D, P, P, P, P, P, P, G, G, G],
+            [G, G, G, G, G, G, G, P, P, P, D, P, P, P, P, G, G, G, G, G, P, P, P, P, P, P, P, P, P, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, P, P, P, G, G, G, G, G, VillageBuildings.Well, T, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, D, P, P, H, T, G, G, G, T, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, P, P, D, P, P, P, H, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, D, P, P, P, P, P, D, P, P, P, P, P, P, D, P, P, P, P, T, G, G, G, G, G, G, G, G],
+            [G, G, G, G, C, P, P, P, D, P, P, P, P, P, P, P, D, P, P, P, P, P, P, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, P, P, P, P, P, P, D, P, P, P, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, D, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, P, D, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G],
+            [G, G, G, G, G, G, G, G, G, G, G, G, G, P, P, P, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G]
+        ];
+
+        uint32 height = uint32(villageMap.length);
+        uint32 width = uint32(villageMap[0].length);
+        bytes memory terrain = new bytes(width * height);
+
+        for (uint32 y = 0; y < height; y++) {
+            for (uint32 x = 0; x < width; x++) {
+                VillageBuildings terrainType = villageMap[y][x];
+                terrain[(y * width) + x] = bytes1(uint8(terrainType));
+
+                bytes32 entity = positionToEntityKey(x, y);
+                if (terrainType == VillageBuildings.Tree || terrainType == VillageBuildings.Well) {
+                    Position.set(world, entity, x, y);
+                    Obstruction.set(world, entity, true);
+                }
+            }
+        }
+
+        Village.set(world, width, height, terrain);
     }
 }

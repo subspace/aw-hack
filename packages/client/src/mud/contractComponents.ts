@@ -22,6 +22,23 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Village: (() => {
+      const tableId = new TableId("", "Village");
+      return defineComponent(
+        world,
+        {
+          width: RecsType.Number,
+          height: RecsType.Number,
+          terrain: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     PlayerComponent: (() => {
       const tableId = new TableId("", "PlayerComponent");
       return defineComponent(

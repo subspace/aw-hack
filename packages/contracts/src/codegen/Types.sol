@@ -10,3 +10,13 @@ enum TerrainType {
   Sand,
   Village
 }
+
+enum VillageBuildings {
+  House,
+  Path,
+  Church,
+  Well,
+  PathDetail,
+  Grass,
+  Tree
+}

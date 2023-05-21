@@ -10,6 +10,7 @@ import adventureStartSong from "./assets/music/adventureStarts.ogg";
 import { useState } from "react";
 import StopIcon from "./icons/StopIcon";
 import PlayIcon from "./icons/PlayIcon";
+import { Village } from "./Village";
 
 export const App = () => {
   const {
@@ -55,7 +56,8 @@ export const App = () => {
           </div>
         ) : (
           <div>
-            <Grid />
+            {/* <Grid /> */}
+            <Village />
           </div>
         )}
         <div>
