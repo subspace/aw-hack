@@ -1,10 +1,10 @@
-import { useComponentValue, useEntityQuery } from "@latticexyz/react";
-import { hexToArray } from "@latticexyz/utils";
-import { Has, getComponentValueStrict } from "@latticexyz/recs";
-import { useMUD } from "./MUDContext";
-import { terrainTypes, TerrainType } from "./terrainTypes";
-import { PlayerIcon } from "./PlayerIcon";
-import { useKeyboardMovement } from "./useKeyboardMovement";
+import { useComponentValue, useEntityQuery } from '@latticexyz/react';
+import { hexToArray } from '@latticexyz/utils';
+import { Has, getComponentValueStrict } from '@latticexyz/recs';
+import { useMUD } from './MUDContext';
+import { terrainTypes, TerrainType } from './terrainTypes';
+import { PlayerIcon } from './PlayerIcon';
+import { useKeyboardMovement } from './useKeyboardMovement';
 
 export const Grid = () => {
   const mud = useMUD();
@@ -17,10 +17,7 @@ export const Grid = () => {
 
   useKeyboardMovement();
 
-  const players = useEntityQuery([
-    Has(Player),
-    Has(Position),
-  ]).map((entity) => {
+  const players = useEntityQuery([Has(Player), Has(Position)]).map((entity) => {
     const position = getComponentValueStrict(Position, entity);
     return {
       entity,
@@ -31,8 +28,7 @@ export const Grid = () => {
     };
   });
 
-  const canJoinGame =
-    useComponentValue(Player, playerEntity)?.value !== true;
+  const canJoinGame = useComponentValue(Player, playerEntity)?.value !== true;
   const map = useComponentValue(Map, singletonEntity);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { width, height, terrain } = map!;
@@ -60,8 +56,8 @@ export const Grid = () => {
             <div
               key={`${x},${y}`}
               className={`
-                w-8 h-8 flex items-center justify-center
-                ${canJoinGame ? "cursor-pointer hover:ring" : null}
+                w-8 h-8 flex
+                ${canJoinGame ? 'cursor-pointer hover:ring' : null}
               `}
               style={{
                 gridColumn: x + 1,
@@ -74,7 +70,7 @@ export const Grid = () => {
                 }
               }}
             >
-              <div className="flex flex-wrap gap-1 items-center justify-center relative">
+              <div className="flex flex-wrap relative">
                 {terrain ? (
                   <div className="w-8 h-8 absolute inset-0 flex items-center justify-center text-3xl pointer-events-none">
                     <img
