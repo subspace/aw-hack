@@ -22,8 +22,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    PlayerComponent: (() => {
-      const tableId = new TableId("", "PlayerComponent");
+    Player: (() => {
+      const tableId = new TableId("", "Player");
       return defineComponent(
         world,
         {
@@ -37,8 +37,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    MovableComponent: (() => {
-      const tableId = new TableId("", "MovableComponent");
+    Movable: (() => {
+      const tableId = new TableId("", "Movable");
       return defineComponent(
         world,
         {
@@ -52,8 +52,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    PositionComponent: (() => {
-      const tableId = new TableId("", "PositionComponen");
+    Position: (() => {
+      const tableId = new TableId("", "Position");
       return defineComponent(
         world,
         {
@@ -68,8 +68,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    NameComponent: (() => {
-      const tableId = new TableId("", "NameComponent");
+    Name: (() => {
+      const tableId = new TableId("", "Name");
       return defineComponent(
         world,
         {
@@ -83,8 +83,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    HealthComponent: (() => {
-      const tableId = new TableId("", "HealthComponent");
+    Health: (() => {
+      const tableId = new TableId("", "Health");
       return defineComponent(
         world,
         {
@@ -98,8 +98,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    PowerComponent: (() => {
-      const tableId = new TableId("", "PowerComponent");
+    Power: (() => {
+      const tableId = new TableId("", "Power");
       return defineComponent(
         world,
         {
@@ -113,8 +113,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    ObstructionComponent: (() => {
-      const tableId = new TableId("", "ObstructionCompo");
+    Obstruction: (() => {
+      const tableId = new TableId("", "Obstruction");
       return defineComponent(
         world,
         {

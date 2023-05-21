@@ -10,7 +10,7 @@ export const Grid = () => {
   const mud = useMUD();
 
   const {
-    components: { Map, PositionComponent, PlayerComponent },
+    components: { Map, Position, Player },
     network: { singletonEntity, playerEntity },
     systemCalls: { spawn },
   } = mud;
@@ -18,10 +18,10 @@ export const Grid = () => {
   useKeyboardMovement();
 
   const players = useEntityQuery([
-    Has(PlayerComponent),
-    Has(PositionComponent),
+    Has(Player),
+    Has(Position),
   ]).map((entity) => {
-    const position = getComponentValueStrict(PositionComponent, entity);
+    const position = getComponentValueStrict(Position, entity);
     return {
       entity,
       x: position.x,
@@ -32,7 +32,7 @@ export const Grid = () => {
   });
 
   const canJoinGame =
-    useComponentValue(PlayerComponent, playerEntity)?.value !== true;
+    useComponentValue(Player, playerEntity)?.value !== true;
   const map = useComponentValue(Map, singletonEntity);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { width, height, terrain } = map!;

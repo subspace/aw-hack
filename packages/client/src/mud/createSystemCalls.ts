@@ -7,7 +7,7 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { playerEntity, singletonEntity, worldSend, txReduced$ }: SetupNetworkResult,
-  { Map, PositionComponent, PlayerComponent, ObstructionComponent }: ClientComponents
+  { Map, Position, Player, Obstruction }: ClientComponents
 ) {
   const wrapPosition = (x: number, y: number) => {
     const mapConfig = getComponentValue(Map, singletonEntity);
@@ -21,7 +21,7 @@ export function createSystemCalls(
   };
 
   const isObstructed = (x: number, y: number) => {
-    return runQuery([Has(ObstructionComponent), HasValue(PositionComponent, { x, y })]).size > 0;
+    return runQuery([Has(Obstruction), HasValue(Position, { x, y })]).size > 0;
   };
 
   const moveTo = async (inputX: number, inputY: number) => {
@@ -36,7 +36,7 @@ export function createSystemCalls(
     }
 
     const positionId = uuid();
-    PositionComponent.addOverride(positionId, {
+    Position.addOverride(positionId, {
       entity: playerEntity,
       value: { x, y },
     });
@@ -45,7 +45,7 @@ export function createSystemCalls(
       const tx = await worldSend("move", [x, y]);
       await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     } finally {
-      PositionComponent.removeOverride(positionId);
+      Position.removeOverride(positionId);
     }
   };
 
@@ -54,7 +54,7 @@ export function createSystemCalls(
       throw new Error("no player");
     }
 
-    const playerPosition = getComponentValue(PositionComponent, playerEntity);
+    const playerPosition = getComponentValue(Position, playerEntity);
     if (!playerPosition) {
       console.warn("cannot moveBy without a player position, not yet spawned?");
       return;
@@ -68,7 +68,7 @@ export function createSystemCalls(
       throw new Error("no player");
     }
 
-    const canSpawn = getComponentValue(PlayerComponent, playerEntity)?.value !== true;
+    const canSpawn = getComponentValue(Player, playerEntity)?.value !== true;
     if (!canSpawn) {
       throw new Error("already spawned");
     }
@@ -80,12 +80,12 @@ export function createSystemCalls(
     }
 
     const positionId = uuid();
-    PositionComponent.addOverride(positionId, {
+    Position.addOverride(positionId, {
       entity: playerEntity,
       value: { x, y },
     });
     const playerId = uuid();
-    PlayerComponent.addOverride(playerId, {
+    Player.addOverride(playerId, {
       entity: playerEntity,
       value: { value: true },
     });
@@ -94,8 +94,8 @@ export function createSystemCalls(
       const tx = await worldSend("spawn", [x, y]);
       await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     } finally {
-      PositionComponent.removeOverride(positionId);
-      PlayerComponent.removeOverride(playerId);
+      Position.removeOverride(positionId);
+      Player.removeOverride(playerId);
     }
   };
 

@@ -17,16 +17,16 @@ export default mudConfig({
     },
 
     // Components:
-    PlayerComponent: "bool",
-    MovableComponent: "bool",
-    PositionComponent: {
+    Player: "bool",
+    Movable: "bool",
+    Position: {
       dataStruct: false,
       schema: { x: "uint32", y: "uint32" },
     },
-    NameComponent: "string",
-    HealthComponent: "uint256",
-    PowerComponent: "uint256",
-    ObstructionComponent: "bool",
+    Name: "string",
+    Health: "uint256",
+    Power: "uint256",
+    Obstruction: "bool",
   },
 
   modules: [
