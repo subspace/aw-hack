@@ -58,7 +58,7 @@ export const villageBuildings: Record<VillageBuildingsType, TerrainConfig> = {
     src: grass,
   },
   [VillageBuildingsType.House]: {
-    src: mountain,
+    src: house,
   },
   [VillageBuildingsType.Church]: {
     src: church,
