@@ -2,7 +2,7 @@ import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
   enums: {
-    TerrainType: ["Grass", "Water", "Forest", "Mountain", "Sand"],
+    TerrainType: ["Grass", "Water", "Forest", "Mountain", "Sand", "Village"],
   },
   tables: {
     // Singletons:
