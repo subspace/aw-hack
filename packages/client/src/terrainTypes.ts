@@ -1,30 +1,40 @@
+import grass from "./assets/images/tileset/grass/grassBase2.png";
+import water from "./assets/images/tileset/water/waterBase.png";
+import sand from "./assets/images/tileset/ground/groundBase.png";
+import tree from "./assets/images/tileset/tree/tree1.png";
+import mountain from "./assets/images/tileset/mountainBase.png";
+import house from "./assets/images/tileset/buildings/house1.png";
+
 export enum TerrainType {
   Grass,
   Water,
   Forest,
   Mountain,
   Sand,
+  Village,
 }
 
 type TerrainConfig = {
-  emoji: string;
+  src: string;
 };
 
-// TODO: replace emoji with images
 export const terrainTypes: Record<TerrainType, TerrainConfig> = {
   [TerrainType.Grass]: {
-    emoji: "",
+    src: grass,
   },
   [TerrainType.Mountain]: {
-    emoji: "🪨",
+    src: mountain,
   },
   [TerrainType.Water]: {
-    emoji: "🌊",
+    src: water,
   },
   [TerrainType.Sand]: {
-    emoji: "🏖️",
+    src: sand,
   },
   [TerrainType.Forest]: {
-    emoji: "🌲",
+    src: tree,
+  },
+  [TerrainType.Village]: {
+    src: house,
   },
 };

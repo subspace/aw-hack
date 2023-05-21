@@ -7,5 +7,6 @@ enum TerrainType {
   Water,
   Forest,
   Mountain,
-  Sand
+  Sand,
+  Village
 }

@@ -24,6 +24,7 @@ contract PostDeploy is Script {
         TerrainType F = TerrainType.Forest;
         TerrainType M = TerrainType.Mountain;
         TerrainType S = TerrainType.Sand;
+        // Can't add another variable, give too many varibles error
 
         TerrainType[32][32] memory map = [
             [G, G, G, G, G, G, G, F, F, F, F, F, F, F, W, W, W, W, F, M, F, M, F, F, F, F, F, M, M, G, G, G],
@@ -37,14 +38,14 @@ contract PostDeploy is Script {
             [S, F, W, G, G, G, G, G, F, F, F, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, G, S, W, W, W],
             [S, G, G, W, W, G, G, F, F, F, F, F, G, G, G, G, G, F, F, F, F, F, F, F, F, F, G, G, G, S, W, W],
             [G, G, G, W, W, G, G, F, F, F, F, F, F, F, F, G, G, F, F, M, F, F, M, F, F, F, F, F, F, S, W, W],
-            [G, G, G, G, W, G, G, G, G, G, F, G, M, M, M, F, F, F, F, F, F, F, M, F, F, M, F, F, M, S, W, W],
+            [G, G, G, G, W, G, TerrainType.Village, G, G, G, F, G, M, M, M, F, F, F, F, F, F, F, M, F, F, M, F, F, M, S, W, W],
             [G, G, F, G, G, G, G, G, G, G, G, G, G, M, M, F, F, F, F, F, F, M, M, F, F, F, F, F, M, S, W, W],
             [F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, M, F, F, F, F, F, F, F, F, F, F, F, F, F, S, S],
             [M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F, F, M, F, F, F, F, F, M, F, F, F, F, F, F, F, F],
             [M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F, F, F, M, F, F, F, F, F, F, M, F, F, F, F, G, G],
             [G, W, W, W, G, G, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F],
             [G, W, W, W, W, G, G, F, F, F, F, F, M, F, F, F, F, F, F, F, F, F, F, F, M, F, F, F, F, M, M, M],
-            [G, W, W, W, G, G, G, G, G, M, M, M, M, F, F, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M, M],
+            [G, W, W, W, G, G, TerrainType.Village, G, G, M, M, M, M, F, F, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M, M],
             [G, W, W, G, G, G, G, G, G, M, M, M, M, M, M, M, F, F, F, F, F, F, F, F, M, M, M, M, M, M, M, M],
             [G, G, G, G, G, G, G, G, G, G, M, M, M, M, M, M, M, M, F, F, F, F, F, F, F, F, M, F, F, F, F, F],
             [G, S, S, G, G, G, G, G, G, G, M, M, M, M, M, M, M, M, M, M, F, F, F, F, M, F, F, M, F, F, F, F],
