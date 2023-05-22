@@ -52,6 +52,29 @@ function getMap() pure returns(TerrainType[32][32] memory) {
     ];
 }
 
+function initMap(IWorld world) {
+    TerrainType[32][32] memory map = getMap();
+
+    uint32 height = uint32(map.length);
+    uint32 width = uint32(map[0].length);
+    bytes memory terrain = new bytes(width * height);
+
+    for (uint32 y = 0; y < height; y++) {
+        for (uint32 x = 0; x < width; x++) {
+            TerrainType terrainType = map[y][x];
+            terrain[(y * width) + x] = bytes1(uint8(terrainType));
+
+            bytes32 entity = positionToEntityKey(x, y);
+            if (terrainType == TerrainType.Mountain || terrainType == TerrainType.Water) {
+                Position.set(world, entity, x, y);
+                Obstruction.set(world, entity, true);
+            }
+        }
+    }
+
+    Map.set(world, width, height, terrain);
+}
+
 contract PostDeploy is Script {
     function run(address worldAddress) external {
         console.log("Deployed world: ", worldAddress);
@@ -63,26 +86,7 @@ contract PostDeploy is Script {
         // Start broadcasting transactions from the deployer account
         vm.startBroadcast(deployerPrivateKey);
 
-        TerrainType[32][32] memory map = getMap();
-
-        uint32 height = uint32(map.length);
-        uint32 width = uint32(map[0].length);
-        bytes memory terrain = new bytes(width * height);
-
-        for (uint32 y = 0; y < height; y++) {
-            for (uint32 x = 0; x < width; x++) {
-                TerrainType terrainType = map[y][x];
-                terrain[(y * width) + x] = bytes1(uint8(terrainType));
-
-                bytes32 entity = positionToEntityKey(x, y);
-                if (terrainType == TerrainType.Mountain || terrainType == TerrainType.Water) {
-                    Position.set(world, entity, x, y);
-                    Obstruction.set(world, entity, true);
-                }
-            }
-        }
-
-        Map.set(world, width, height, terrain);
+        initMap(world);
 
         vm.stopBroadcast();
     }
