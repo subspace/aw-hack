@@ -5,6 +5,7 @@ import { useMUD } from './MUDContext';
 import { Grid } from './Grid';
 import { Greeting } from './Greeting';
 import { MusicButton } from './MusicButton';
+import { PlayerProfile } from './PlayerProfile';
 
 export const App = () => {
   const {
@@ -51,6 +52,12 @@ export const App = () => {
         <div className="absolute top-0 right-0 m-4">
           <MusicButton />
         </div>
+
+        {playerPosition && (
+          <div className="absolute top-0 left-0 m-4">
+            <PlayerProfile />
+          </div>
+        )}
       </div>
     </div>
   );
