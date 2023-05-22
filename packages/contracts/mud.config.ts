@@ -36,6 +36,13 @@ export default mudConfig({
     },
     Obstruction: "bool",
     Player: "bool",
+    InBattle: {
+      keySchema: {
+        entityA: "bytes32",
+        entityB: "bytes32",
+      },
+      schema: "address",
+    },
     OwnedBy: "bytes32",
 
     Name: "string",

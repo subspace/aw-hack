@@ -99,6 +99,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    InBattle: (() => {
+      const tableId = new TableId("", "InBattle");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     OwnedBy: (() => {
       const tableId = new TableId("", "OwnedBy");
       return defineComponent(

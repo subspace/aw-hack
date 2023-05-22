@@ -9,6 +9,7 @@ import { Movable, MovableTableId } from "./tables/Movable.sol";
 import { Position, PositionTableId } from "./tables/Position.sol";
 import { Obstruction, ObstructionTableId } from "./tables/Obstruction.sol";
 import { Player, PlayerTableId } from "./tables/Player.sol";
+import { InBattle, InBattleTableId } from "./tables/InBattle.sol";
 import { OwnedBy, OwnedByTableId } from "./tables/OwnedBy.sol";
 import { Name, NameTableId } from "./tables/Name.sol";
 import { Affinity, AffinityTableId } from "./tables/Affinity.sol";
