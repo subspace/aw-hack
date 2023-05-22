@@ -3,15 +3,14 @@ pragma solidity >=0.8.0;
 
 import {System} from "@latticexyz/world/src/System.sol";
 import {
-    PlayerComponent as Player, 
-    MovableComponent as Movable, 
-    PositionComponent as Position, 
-    ObstructionComponent as Obstruction,
+    Player, 
+    Movable, 
+    Position, 
+    Obstruction,
     Map
 } from "../codegen/Tables.sol";
 import {playerEntity} from "../entities.sol";
-import {addressToEntityKey} from "../utils.sol";
-import { positionToEntityKey } from "../positionToEntityKey.sol";
+import {addressToEntityKey, positionToEntityKey} from "../utils.sol";
 
 contract MoveSystem is System {
     function move(uint32 x, uint32 y) public {

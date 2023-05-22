@@ -2,7 +2,9 @@
 pragma solidity >=0.8.0;
 
 import {
-    PlayerComponent as Player, PositionComponent as Position, MovableComponent as Movable
+    Player, 
+    Position, 
+    Movable
 } from "./codegen/Tables.sol";
 
 function playerEntity(bytes32 id, uint32 x, uint32 y) {

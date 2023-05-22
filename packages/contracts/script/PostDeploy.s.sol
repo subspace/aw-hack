@@ -5,8 +5,8 @@ import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {IWorld} from "../src/codegen/world/IWorld.sol";
 import {TerrainType} from "../src/codegen/Types.sol";
-import {Map, PositionComponent as Position, ObstructionComponent as Obstruction} from "../src/codegen/Tables.sol";
-import { positionToEntityKey } from "../src/positionToEntityKey.sol";
+import {Map, Position, Obstruction} from "../src/codegen/Tables.sol";
+import { positionToEntityKey } from "../src/utils.sol";
 
 contract PostDeploy is Script {
     function run(address worldAddress) external {
