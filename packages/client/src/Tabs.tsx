@@ -25,9 +25,11 @@ export default function Tabs({ elements }: TabsType) {
                 <a
                   href="#"
                   onClick={() => setOpenTab(index)}
-                  className={` ${
-                    openTab === index ? "bg-purple-600 text-white" : ""
-                  } inline-block px-4 py-2 text-gray-600 bg-white rounded shadow`}
+                  className={`inline-block px-4 py-2 rounded shadow ${
+                    openTab === index
+                      ? "bg-purple-600 text-white"
+                      : "text-gray-600 bg-white"
+                  } `}
                 >
                   {title}
                 </a>
