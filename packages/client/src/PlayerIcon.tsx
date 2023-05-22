@@ -3,14 +3,16 @@ import player2Img from "./assets/images/player2.png";
 
 export const PlayerIcon = ({
   isMyPlayer = false,
+  additionalClass = "",
 }: {
   isMyPlayer?: boolean;
+  additionalClass?: string;
 }) => {
   return (
     <div
       className={`w-8 h-8 ${
         isMyPlayer ? "bg-red-500" : "bg-blue-500"
-      } rounded-full flex items-center justify-center`}
+      } rounded-full flex items-center justify-center ${additionalClass}`}
     >
       <img
         src={isMyPlayer ? player1Img : player2Img}
