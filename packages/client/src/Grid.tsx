@@ -12,7 +12,6 @@ export const Grid = () => {
   const {
     components: { Map, Position, Player },
     network: { singletonEntity, playerEntity },
-    systemCalls: { spawn },
   } = mud;
 
   useKeyboardMovement();
@@ -62,12 +61,6 @@ export const Grid = () => {
               style={{
                 gridColumn: x + 1,
                 gridRow: y + 1,
-              }}
-              onClick={(event) => {
-                event.preventDefault();
-                if (canJoinGame) {
-                  spawn(x, y);
-                }
               }}
             >
               <div className="flex flex-wrap relative">

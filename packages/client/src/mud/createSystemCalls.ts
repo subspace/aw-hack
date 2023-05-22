@@ -102,5 +102,6 @@ export function createSystemCalls(
   return {
     spawn,
     moveBy,
+    isObstructed,
   };
 }
