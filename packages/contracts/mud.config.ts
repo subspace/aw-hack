@@ -23,6 +23,7 @@ export default mudConfig({
       dataStruct: false,
       schema: { x: "uint32", y: "uint32" },
     },
+    OwnedBy: "bytes32",
     Name: "string",
     Health: "uint256",
     Power: "uint256",

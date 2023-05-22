@@ -7,6 +7,7 @@ import { Map, MapTableId } from "./tables/Map.sol";
 import { Player, PlayerTableId } from "./tables/Player.sol";
 import { Movable, MovableTableId } from "./tables/Movable.sol";
 import { Position, PositionTableId } from "./tables/Position.sol";
+import { OwnedBy, OwnedByTableId } from "./tables/OwnedBy.sol";
 import { Name, NameTableId } from "./tables/Name.sol";
 import { Health, HealthTableId } from "./tables/Health.sol";
 import { Power, PowerTableId } from "./tables/Power.sol";

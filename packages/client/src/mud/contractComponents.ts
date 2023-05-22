@@ -68,6 +68,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    OwnedBy: (() => {
+      const tableId = new TableId("", "OwnedBy");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Name: (() => {
       const tableId = new TableId("", "Name");
       return defineComponent(
