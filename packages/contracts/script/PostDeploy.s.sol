@@ -78,7 +78,7 @@ function initMap(IWorld world) {
 }
 
 function initShop(IWorld world) {
-    Monster[] memory monsters = new Monster[](1);
+    Monster[] memory monsters = new Monster[](3);
     monsters[0] = Monster({ name: "Fire elemental",  health: 100, power: 10 });
     monsters[1] = Monster({ name: "Water elemental", health:  90, power: 12 });
     monsters[2] = Monster({ name: "Earth elemental", health:  80, power: 14 });
