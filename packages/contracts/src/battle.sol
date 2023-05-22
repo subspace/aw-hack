@@ -73,9 +73,19 @@ contract Battle {
 
     function attack() public {
         if (isTurnA) {
-            healthA -= getDamage(entityA, entityB);
+            uint256 damage = getDamage(entityA, entityB);
+            if (healthB > damage) {
+                healthB -= damage;
+            } else {
+                // TODO: Battle is over
+            }
         } else {
-            healthB -= getDamage(entityB, entityA);
+            uint256 damage = getDamage(entityB, entityA);
+            if (healthA > damage) {
+                healthA -= damage;
+            } else {
+                // TODO: Battle is over
+            }
         }
         isTurnA = !isTurnA;
     }
