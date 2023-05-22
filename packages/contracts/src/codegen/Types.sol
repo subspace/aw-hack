@@ -10,3 +10,16 @@ enum TerrainType {
   Sand,
   Village
 }
+
+enum ElementType {
+  Water,
+  Fire,
+  Earth,
+  Air
+}
+
+enum SizeType {
+  Small,
+  Medium,
+  Large
+}

@@ -5,11 +5,14 @@ pragma solidity >=0.8.0;
 
 import { Map, MapTableId } from "./tables/Map.sol";
 import { Shop, ShopTableId } from "./tables/Shop.sol";
-import { Player, PlayerTableId } from "./tables/Player.sol";
 import { Movable, MovableTableId } from "./tables/Movable.sol";
 import { Position, PositionTableId } from "./tables/Position.sol";
+import { Obstruction, ObstructionTableId } from "./tables/Obstruction.sol";
+import { Player, PlayerTableId } from "./tables/Player.sol";
 import { OwnedBy, OwnedByTableId } from "./tables/OwnedBy.sol";
 import { Name, NameTableId } from "./tables/Name.sol";
+import { Affinity, AffinityTableId } from "./tables/Affinity.sol";
+import { Attack, AttackTableId } from "./tables/Attack.sol";
+import { Defense, DefenseTableId } from "./tables/Defense.sol";
+import { Size, SizeTableId } from "./tables/Size.sol";
 import { Health, HealthTableId } from "./tables/Health.sol";
-import { Power, PowerTableId } from "./tables/Power.sol";
-import { Obstruction, ObstructionTableId } from "./tables/Obstruction.sol";
