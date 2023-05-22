@@ -15,6 +15,16 @@ export default mudConfig({
         terrain: "bytes",
       },
     },
+    Shop: {
+      // TODO: Should it be singleton?
+      keySchema: {},
+      dataStruct: false,
+      schema: {
+        // Address for shop inventory
+        shopInventory: "address",
+        monsterPrice: "uint256",
+      },
+    },
 
     // Components:
     Player: "bool",

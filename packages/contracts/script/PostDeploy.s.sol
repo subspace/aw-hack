@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {Script} from "forge-std/Script.sol";
-import {console} from "forge-std/console.sol";
-import {IWorld} from "../src/codegen/world/IWorld.sol";
-import {TerrainType} from "../src/codegen/Types.sol";
-import {Map, Position, Obstruction} from "../src/codegen/Tables.sol";
+import { Script } from "forge-std/Script.sol";
+import { console } from "forge-std/console.sol";
+import { IWorld } from "../src/codegen/world/IWorld.sol";
+import { TerrainType } from "../src/codegen/Types.sol";
+import { Map, Position, Obstruction, Shop } from "../src/codegen/Tables.sol";
 import { positionToEntityKey } from "../src/utils.sol";
+import { Monster } from "../src/entities.sol";
+import { ShopInventory } from "../src/shop_inventory.sol";
 
 function getMap() pure returns(TerrainType[32][32] memory) {
     TerrainType G = TerrainType.Grass;
@@ -75,6 +77,17 @@ function initMap(IWorld world) {
     Map.set(world, width, height, terrain);
 }
 
+function initShop(IWorld world) {
+    Monster[] memory monsters = new Monster[](1);
+    monsters[0] = Monster({ name: "Fire elemental",  health: 100, power: 10 });
+    monsters[1] = Monster({ name: "Water elemental", health:  90, power: 12 });
+    monsters[2] = Monster({ name: "Earth elemental", health:  80, power: 14 });
+
+    ShopInventory shop_inventory = new ShopInventory(Monster[](monsters));
+
+    Shop.set(world, address(shop_inventory), 0);
+}
+
 contract PostDeploy is Script {
     function run(address worldAddress) external {
         console.log("Deployed world: ", worldAddress);
@@ -87,6 +100,7 @@ contract PostDeploy is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         initMap(world);
+        initShop(world);
 
         vm.stopBroadcast();
     }

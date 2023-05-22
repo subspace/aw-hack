@@ -22,6 +22,22 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Shop: (() => {
+      const tableId = new TableId("", "Shop");
+      return defineComponent(
+        world,
+        {
+          shopInventory: RecsType.String,
+          monsterPrice: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Player: (() => {
       const tableId = new TableId("", "Player");
       return defineComponent(
