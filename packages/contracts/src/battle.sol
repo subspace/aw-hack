@@ -2,7 +2,7 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { Health, Attack, Defense, Size, Affinity } from "./codegen/Tables.sol";
+import { Health, Attack, Defense, Size, Affinity, InBattle } from "./codegen/Tables.sol";
 import { ElementType, SizeType } from "./codegen/Types.sol";
 import { CombatSystem } from "./systems/CombatSystem.sol";
 
@@ -71,20 +71,29 @@ contract Battle {
         isTurnA = true;
     }
 
-    function attack() public {
+    function gameOver() private {
+        if (entityA < entityB) {
+            InBattle.deleteRecord(entityA, entityB);
+        } else {
+            InBattle.deleteRecord(entityB, entityA);
+        }
+        selfdestruct(payable(address(this)));
+    }
+
+    function attack() public payable {
         if (isTurnA) {
             uint256 damage = getDamage(entityA, entityB);
             if (healthB > damage) {
                 healthB -= damage;
             } else {
-                // TODO: Battle is over
+                gameOver();
             }
         } else {
             uint256 damage = getDamage(entityB, entityA);
             if (healthA > damage) {
                 healthA -= damage;
             } else {
-                // TODO: Battle is over
+                gameOver();
             }
         }
         isTurnA = !isTurnA;
