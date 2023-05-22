@@ -9,8 +9,6 @@ export const MusicButton = () => {
   const shouldPlayMusic = localStorage.getItem("shouldPlayMusic") === "true";
   const [playMusic, setPlayMusic] = useState(shouldPlayMusic);
 
-  console.log({playMusic})
-
   const [play, { stop }] = useSound(adventureStartSong, {
     interrupt: true,
     volume: 0.5,
