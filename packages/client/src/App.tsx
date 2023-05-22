@@ -1,11 +1,13 @@
-import { SyncState } from '@latticexyz/network';
-import { useComponentValue } from '@latticexyz/react';
+import { SyncState } from "@latticexyz/network";
+import { useComponentValue } from "@latticexyz/react";
 
-import { useMUD } from './MUDContext';
-import { Grid } from './Grid';
-import { Greeting } from './Greeting';
-import { MusicButton } from './MusicButton';
-import { PlayerProfile } from './PlayerProfile';
+import { useMUD } from "./MUDContext";
+import { Grid } from "./Grid";
+import { Greeting } from "./Greeting";
+import { MusicButton } from "./MusicButton";
+import { PlayerProfile } from "./PlayerProfile";
+import useModal from "./hooks/useModal";
+import Inventory from "./Inventory";
 
 export const App = () => {
   const {
@@ -16,9 +18,11 @@ export const App = () => {
 
   const loadingState = useComponentValue(LoadingState, singletonEntity, {
     state: SyncState.CONNECTING,
-    msg: 'Connecting',
+    msg: "Connecting",
     percentage: 0,
   });
+
+  const { isOpen, toggle } = useModal();
 
   const joinRandomCoordinates = () => {
     let x, y;
@@ -55,10 +59,19 @@ export const App = () => {
 
         {playerPosition && (
           <div className="absolute top-0 left-0 m-4">
-            <PlayerProfile />
+            <div className="flex flex-col gap-4">
+              <PlayerProfile />
+              <button
+                className="bg-white color-black px-2 py-1"
+                onClick={toggle}
+              >
+                Open Inventory
+              </button>
+            </div>
           </div>
         )}
       </div>
+      <Inventory isOpen={isOpen} toggle={toggle} />
     </div>
   );
 };
