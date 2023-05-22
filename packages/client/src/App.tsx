@@ -10,6 +10,8 @@ import adventureStartSong from "./assets/music/adventureStarts.ogg";
 import { useState } from "react";
 import StopIcon from "./icons/StopIcon";
 import PlayIcon from "./icons/PlayIcon";
+import useModal from "./hooks/useModal";
+import Inventory from "./Inventory";
 
 export const App = () => {
   const {
@@ -38,6 +40,8 @@ export const App = () => {
     }
   );
 
+  const { isOpen, toggle } = useModal();
+
   const handleMusic = () => {
     if (playMusic) {
       stop();
@@ -47,7 +51,7 @@ export const App = () => {
   };
 
   return (
-    <div className=" bg-black w-screen h-screen flex items-center justify-center ">
+    <div className="bg-black w-screen h-screen flex items-center justify-center">
       <div className="flex flex-col gap-10">
         {loadingState.state !== SyncState.LIVE ? (
           <div>
@@ -58,7 +62,7 @@ export const App = () => {
             <Grid />
           </div>
         )}
-        <div>
+        <div className="flex gap-4">
           <button
             className="bg-white color-black px-2 py-2 rounded-full"
             onClick={handleMusic}
@@ -73,7 +77,11 @@ export const App = () => {
               </span>
             )}
           </button>
+          <button className="bg-white color-black px-2 py-1" onClick={toggle}>
+            Open Inventory
+          </button>
         </div>
+        <Inventory isOpen={isOpen} toggle={toggle} />
       </div>
     </div>
   );
