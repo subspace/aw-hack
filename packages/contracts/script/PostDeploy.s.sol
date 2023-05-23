@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
-import { TerrainType } from "../src/codegen/Types.sol";
+import { TerrainType, ElementType, SizeType } from "../src/codegen/Types.sol";
 import { Map, Position, Obstruction, Shop } from "../src/codegen/Tables.sol";
 import { positionToEntityKey } from "../src/utils.sol";
 import { Monster } from "../src/entities.sol";
@@ -78,10 +78,39 @@ function initMap(IWorld world) {
 }
 
 function initShop(IWorld world) {
-    Monster[] memory monsters = new Monster[](1);
-    monsters[0] = Monster({ name: "Fire elemental",  health: 100, power: 10 });
-    monsters[1] = Monster({ name: "Water elemental", health:  90, power: 12 });
-    monsters[2] = Monster({ name: "Earth elemental", health:  80, power: 14 });
+    Monster[] memory monsters = new Monster[](4);
+    monsters[0] = Monster({
+      name: "Blaze Hound",
+      affinity: ElementType.Fire,
+      health: 90,
+      attack: 60,
+      defense: 40,
+      size: SizeType.Medium
+    });
+    monsters[1] = Monster({
+      name: "Aqua Serpent",
+      affinity: ElementType.Water,
+      health: 80,
+      attack: 45,
+      defense: 55,
+      size: SizeType.Large
+    });
+    monsters[2] = Monster({
+      name: "Rock Golem",
+      affinity: ElementType.Earth,
+      health: 120,
+      attack: 70,
+      defense: 90,
+      size: SizeType.Large
+    });
+    monsters[3] = Monster({
+      name: "Air Sprite",
+      affinity: ElementType.Air,
+      health: 70,
+      attack: 50,
+      defense: 40,
+      size: SizeType.Small
+    });
 
     ShopInventory shop_inventory = new ShopInventory(Monster[](monsters));
 

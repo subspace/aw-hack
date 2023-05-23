@@ -12,6 +12,11 @@ contract ShopInventory {
         }
     }
 
+    function getMonster(uint256 monsterType) public view returns (Monster memory) {
+        require(monsterType < monsters.length, "There is no such monster");
+        return monsters[monsterType];
+    }
+
     function numberOfMonsters() public view returns (uint256) {
         return monsters.length;
     }

@@ -13,13 +13,10 @@ contract ShopSystem is System {
         (address inventoryAddress, uint256 monsterPrice) = Shop.get();
         ShopInventory inventory = ShopInventory(inventoryAddress);
 
-        require(monsterType < inventory.numberOfMonsters(), "There is no such monster");
-        require((payable(0)).send(monsterPrice), "Failed to buy monster. Not enough Ether!");
+        require(payable(0).send(monsterPrice), "Failed to buy monster. Not enough Ether!");
 
         bytes32 monsterId = getUniqueEntity();
-        (string memory name, uint256 health, uint256 power) = inventory.monsters(monsterType);
-        Monster memory monster = Monster({ name: name, health: health, power: power });
-        monsterEntity(monsterId, monster, addressToEntityKey(msg.sender));
+        monsterEntity(monsterId, inventory.getMonster(monsterType), addressToEntityKey(msg.sender));
         return monsterId;
     }
 

@@ -6,15 +6,22 @@ import {
     Position,
     Movable,
     Name,
-    Power,
     Health,
+    Attack,
+    Defense,
+    Size,
+    Affinity,
     OwnedBy
 } from "./codegen/Tables.sol";
+import { SizeType, ElementType } from "./codegen/Types.sol";
 
 struct Monster {
     string name;
+    ElementType affinity;
     uint256 health;
-    uint256 power;
+    uint256 attack;
+    uint256 defense;
+    SizeType size;
 }
 
 function playerEntity(bytes32 id, uint32 x, uint32 y) {
@@ -25,7 +32,10 @@ function playerEntity(bytes32 id, uint32 x, uint32 y) {
 
 function monsterEntity(bytes32 id, Monster memory monster, bytes32 owner) {
     Name.set(id, monster.name);
-    Power.set(id, monster.power);
+    Affinity.set(id, monster.affinity);
     Health.set(id, monster.health);
+    Attack.set(id, monster.attack);
+    Defense.set(id, monster.defense);
+    Size.set(id, monster.size);
     OwnedBy.set(id, owner);
 }
