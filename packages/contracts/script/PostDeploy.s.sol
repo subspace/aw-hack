@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {Script} from "forge-std/Script.sol";
-import {console} from "forge-std/console.sol";
-import {IWorld} from "../src/codegen/world/IWorld.sol";
-import {TerrainType} from "../src/codegen/Types.sol";
-import {Map, Position, Obstruction} from "../src/codegen/Tables.sol";
+import { Script } from "forge-std/Script.sol";
+import { console } from "forge-std/console.sol";
+import { IWorld } from "../src/codegen/world/IWorld.sol";
+import { TerrainType, ElementType, SizeType } from "../src/codegen/Types.sol";
+import { Map, Position, Obstruction, Shop } from "../src/codegen/Tables.sol";
 import { positionToEntityKey } from "../src/utils.sol";
+import { Monster } from "../src/entities.sol";
+import { ShopInventory } from "../src/shop_inventory.sol";
 
 function getMap() pure returns(TerrainType[32][32] memory) {
     TerrainType G = TerrainType.Grass;
@@ -52,6 +54,69 @@ function getMap() pure returns(TerrainType[32][32] memory) {
     ];
 }
 
+function initMap(IWorld world) {
+    TerrainType[32][32] memory map = getMap();
+
+    uint32 height = uint32(map.length);
+    uint32 width = uint32(map[0].length);
+    bytes memory terrain = new bytes(width * height);
+
+    for (uint32 y = 0; y < height; y++) {
+        for (uint32 x = 0; x < width; x++) {
+            TerrainType terrainType = map[y][x];
+            terrain[(y * width) + x] = bytes1(uint8(terrainType));
+
+            bytes32 entity = positionToEntityKey(x, y);
+            if (terrainType == TerrainType.Mountain || terrainType == TerrainType.Water) {
+                Position.set(world, entity, x, y);
+                Obstruction.set(world, entity, true);
+            }
+        }
+    }
+
+    Map.set(world, width, height, terrain);
+}
+
+function initShop(IWorld world) {
+    Monster[] memory monsters = new Monster[](4);
+    monsters[0] = Monster({
+      name: "Blaze Hound",
+      affinity: ElementType.Fire,
+      health: 90,
+      attack: 60,
+      defense: 40,
+      size: SizeType.Medium
+    });
+    monsters[1] = Monster({
+      name: "Aqua Serpent",
+      affinity: ElementType.Water,
+      health: 80,
+      attack: 45,
+      defense: 55,
+      size: SizeType.Large
+    });
+    monsters[2] = Monster({
+      name: "Rock Golem",
+      affinity: ElementType.Earth,
+      health: 120,
+      attack: 70,
+      defense: 90,
+      size: SizeType.Large
+    });
+    monsters[3] = Monster({
+      name: "Air Sprite",
+      affinity: ElementType.Air,
+      health: 70,
+      attack: 50,
+      defense: 40,
+      size: SizeType.Small
+    });
+
+    ShopInventory shop_inventory = new ShopInventory(Monster[](monsters));
+
+    Shop.set(world, address(shop_inventory), 0);
+}
+
 contract PostDeploy is Script {
     function run(address worldAddress) external {
         console.log("Deployed world: ", worldAddress);
@@ -63,26 +128,8 @@ contract PostDeploy is Script {
         // Start broadcasting transactions from the deployer account
         vm.startBroadcast(deployerPrivateKey);
 
-        TerrainType[32][32] memory map = getMap();
-
-        uint32 height = uint32(map.length);
-        uint32 width = uint32(map[0].length);
-        bytes memory terrain = new bytes(width * height);
-
-        for (uint32 y = 0; y < height; y++) {
-            for (uint32 x = 0; x < width; x++) {
-                TerrainType terrainType = map[y][x];
-                terrain[(y * width) + x] = bytes1(uint8(terrainType));
-
-                bytes32 entity = positionToEntityKey(x, y);
-                if (terrainType == TerrainType.Mountain || terrainType == TerrainType.Water) {
-                    Position.set(world, entity, x, y);
-                    Obstruction.set(world, entity, true);
-                }
-            }
-        }
-
-        Map.set(world, width, height, terrain);
+        initMap(world);
+        initShop(world);
 
         vm.stopBroadcast();
     }

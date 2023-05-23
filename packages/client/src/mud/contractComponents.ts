@@ -22,12 +22,13 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Player: (() => {
-      const tableId = new TableId("", "Player");
+    Shop: (() => {
+      const tableId = new TableId("", "Shop");
       return defineComponent(
         world,
         {
-          value: RecsType.Boolean,
+          shopInventory: RecsType.String,
+          monsterPrice: RecsType.BigInt,
         },
         {
           metadata: {
@@ -68,6 +69,51 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Obstruction: (() => {
+      const tableId = new TableId("", "Obstruction");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Player: (() => {
+      const tableId = new TableId("", "Player");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    InBattle: (() => {
+      const tableId = new TableId("", "InBattle");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     OwnedBy: (() => {
       const tableId = new TableId("", "OwnedBy");
       return defineComponent(
@@ -98,42 +144,72 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Affinity: (() => {
+      const tableId = new TableId("", "Affinity");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Attack: (() => {
+      const tableId = new TableId("", "Attack");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Defense: (() => {
+      const tableId = new TableId("", "Defense");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Size: (() => {
+      const tableId = new TableId("", "Size");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Health: (() => {
       const tableId = new TableId("", "Health");
       return defineComponent(
         world,
         {
           value: RecsType.BigInt,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Power: (() => {
-      const tableId = new TableId("", "Power");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.BigInt,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Obstruction: (() => {
-      const tableId = new TableId("", "Obstruction");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Boolean,
         },
         {
           metadata: {

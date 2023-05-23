@@ -8,11 +8,12 @@ import { IBaseWorld } from "@latticexyz/world/src/interfaces/IBaseWorld.sol";
 import { ICombatSystem } from "./ICombatSystem.sol";
 import { IMoveSystem } from "./IMoveSystem.sol";
 import { INftSystem } from "./INftSystem.sol";
+import { IShopSystem } from "./IShopSystem.sol";
 
 /**
  * The IWorld interface includes all systems dynamically added to the World
  * during the deploy process.
  */
-interface IWorld is IBaseWorld, ICombatSystem, IMoveSystem, INftSystem {
+interface IWorld is IBaseWorld, ICombatSystem, IMoveSystem, INftSystem, IShopSystem {
 
 }
