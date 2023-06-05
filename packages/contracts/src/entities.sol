@@ -11,7 +11,9 @@ import {
     Defense,
     Size,
     Affinity,
-    OwnedBy
+    OwnedBy,
+    BattleAble,
+    BattleTrigger
 } from "./codegen/Tables.sol";
 import { SizeType, ElementType } from "./codegen/Types.sol";
 
@@ -28,6 +30,8 @@ function playerEntity(bytes32 id, uint32 x, uint32 y) {
     Player.set(id, true);
     Position.set(id, x, y);
     Movable.set(id, true);
+    BattleAble.set(id, true);
+    BattleTrigger.set(id, true);
 }
 
 function monsterEntity(bytes32 id, Monster memory monster, bytes32 owner) {

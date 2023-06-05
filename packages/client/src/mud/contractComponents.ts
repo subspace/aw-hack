@@ -53,6 +53,36 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    BattleTrigger: (() => {
+      const tableId = new TableId("", "BattleTrigger");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    BattleAble: (() => {
+      const tableId = new TableId("", "BattleAble");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Position: (() => {
       const tableId = new TableId("", "Position");
       return defineComponent(

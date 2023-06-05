@@ -7,13 +7,14 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { playerEntity, singletonEntity, worldSend, txReduced$ }: SetupNetworkResult,
-  { Map, Position, Player, Obstruction }: ClientComponents
+  { Map, Position, Player, Obstruction, InBattle }: ClientComponents
 ) {
   const wrapPosition = (x: number, y: number) => {
     const mapConfig = getComponentValue(Map, singletonEntity);
     if (!mapConfig) {
       throw new Error("mapConfig no yet loaded or initialized");
     }
+
     return [
       (x + mapConfig.width) % mapConfig.width,
       (y + mapConfig.height) % mapConfig.height,
@@ -27,6 +28,13 @@ export function createSystemCalls(
   const moveTo = async (inputX: number, inputY: number) => {
     if (!playerEntity) {
       throw new Error("no player");
+    }
+
+    const isInBattle = !!getComponentValue(InBattle, playerEntity);
+
+    if (isInBattle) {
+      console.warn("cannot move while in battle");
+      return;
     }
 
     const [x, y] = wrapPosition(inputX, inputY);
@@ -99,9 +107,27 @@ export function createSystemCalls(
     }
   };
 
+  const attack = async (targetEntity: string) => {
+    // TODO
+    return null as any;
+  };
+
+  const flee = async () => {
+    // TODO
+    return null as any;
+  };
+
+  const useItem = async (itemEntity: string) => {
+    // TODO
+    return null as any;
+  };
+
   return {
     spawn,
     moveBy,
     isObstructed,
+    attack,
+    flee,
+    useItem,
   };
 }
