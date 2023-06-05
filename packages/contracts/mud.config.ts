@@ -30,6 +30,8 @@ export default mudConfig({
 
     // Components:
     Movable: "bool",
+    BattleTrigger: "bool",
+    BattleAble: "bool",
     Position: {
       dataStruct: false,
       schema: { x: "uint32", y: "uint32" },
@@ -44,7 +46,6 @@ export default mudConfig({
       schema: "address",
     },
     OwnedBy: "bytes32",
-
     Name: "string",
     Affinity: "ElementType",
     Attack: "uint256",

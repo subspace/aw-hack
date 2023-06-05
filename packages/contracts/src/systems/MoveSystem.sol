@@ -7,6 +7,8 @@ import {
     Movable,
     Position,
     Obstruction,
+    BattleAble,
+    BattleTrigger,
     Map
 } from "../codegen/Tables.sol";
 import { playerEntity } from "../entities.sol";
@@ -28,6 +30,11 @@ contract MoveSystem is System {
         x = (x + width) % width;
         y = (y + height) % height;
 
+        if(BattleAble.get(player) && BattleTrigger.get(position)) {
+            //Add encounter
+            startBattle(player, position);
+        }
+
         Position.set(player, x, y);
     }
 
@@ -42,5 +49,10 @@ contract MoveSystem is System {
         uint32 deltaX = fromX > toX ? fromX - toX : toX - fromX;
         uint32 deltaY = fromY > toY ? fromY - toY : toY - fromY;
         return deltaX + deltaY;
+    }
+
+    
+    function startBattle(bytes32 playerA, bytes32 playerB) internal {
+        // TODO: start battle
     }
 }
